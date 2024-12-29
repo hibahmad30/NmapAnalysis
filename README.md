@@ -33,54 +33,54 @@ Then, click the ‘Environment Variables’ tab, and choose ‘Path’ from the 
  <br/>
 <img src="https://i.imgur.com/syFpMSg.png" alt="Edit Environment Variable"/>
 
-<h2>Network Configuration and Testing:</h2> 
+<h2>Basic Nmap Scans - TCP Connect & SYN:</h2> 
 
 <p align="center">
-Next, we need to configure both VMs to communicate with each other to ensure the scan functions properly. In VirtualBox, navigate to 'File > Tools > Network Manager > NAT Networks', then right-click to create a new NAT network and ensure that DHCP is enabled.
+In this project, we will use two Nmap scan types: -sT (TCP Connect Scan) and -sS (TCP SYN Scan). These scan types utilize the commands ‘nmap -sT 10.0.2.4’ and ‘nmap -sS 10.0.2.4’, where ‘10.0.2.4’ is the IP address of the target system. If no specific ports are specified, Nmap will scan the top 1000 ports by default.
  <br/> 
  <br/>
-Next, in the Metasploitable VM, run the 'ifconfig' command and note the IP address located after 'inet addr':
+-sT completes the full TCP handshake. Nmap sends a SYN packet, and if the port is open, the target replies with a SYN-ACK. Nmap then responds with an ACK, establishing a connection. This scan is slower and easier to detect since it establishes a full connection.
  <br/> 
  <br/>
-<img src="https://i.imgur.com/QBaGUZ7.png" alt="Metasploitable VM IP address"/>
+<img src="https://i.imgur.com/m4n7cV4.png" alt="TCP Connect Scan"/> 
  <br/> 
  <br/>
-From the Windows 10 virtual machine, open PowerShell and run the 'ping' command followed by the IP address of the Metasploitable virtual machine to test connectivity.
+-sS is a stealthier method of scanning, where Nmap sends a SYN packet, and if the port is open, the target replies with a SYN-ACK. Instead of completing the handshake, Nmap sends a RST packet to terminate the connection before it’s fully established. This makes it faster and less detectable.
  <br/> 
  <br/>
-<img src="https://i.imgur.com/Qo22DYP.png" alt="Test Network Connection"/>
+<img src="https://i.imgur.com/L1ZxxPw.png" alt="TCP SYN Scan"/> 
  <br/> 
  <br/>
-Additionally, on the Windows 10 virtual machine, navigate to the following link to download Nessus Essentials: https://www.tenable.com/products/nessus/nessus-essentials. Optionally, you can run the following command in PowerShell to verify the SHA-256 hash of the downloaded file against the provided hash on Tenable's download page for Nessus Essentials.
- <br/> 
- <br/>
-<img src="https://i.imgur.com/GmA24Bw.png" alt="Verify Hash"/>
-
-<h2>Uncredentialed Scan:</h2> 
+The key difference is that -sT completes the full connection, while -sS stops before the connection is fully established, making it a more stealthy option.
+ 
+<h2>OS Detection and Scanning Specific Ports:</h2> 
 <p align="center">
-In Nessus, click 'New Scan', then select 'Basic Network Scan'. Enter a name for the scan and provide the virtual machine's IPv4 address in the 'Targets' field. Nessus Essentials also allows the administrator to schedule scans at desired intervals and specify contacts to receive scan notifications. Once the scan is configured, click the 'Launch' icon to begin the scan.
+Nmap also allows for specifying which ports to scan. For example, to scan SMTP (port 25), used for sending emails, DNS (port 53), which is responsible for domain name resolution, and HTTP (port 80), used for web traffic, you would use the command nmap -sT -p 25,53,80 10.0.2.4 for a full TCP connection scan, or nmap -sS -p 25,53,80 10.0.2.4 for stealth mode: 
 <br />
 <br />
-<img src="https://i.imgur.com/27U9Nqw.png" alt="Nessus Scanner Page"/> 
+<img src="https://i.imgur.com/lBmA4c3.png" alt="Specify Ports Scan"/> 
 <br />
 <br />
-The image below shows the results of the initial scan. Most of the vulnerabilities detected fall under the 'Info' severity, with several categorized as 'Medium' severity. Since the scan was performed without privileged credentials, it could not perform a deep analysis and missed many vulnerabilities. The next step is to conduct a credentialed scan for more comprehensive results.  
+<img src="https://i.imgur.com/rONhUQZ.png" alt="Specify Ports Scan - Stealth Mode"/> 
 <br />
 <br />
-<img src="https://i.imgur.com/3ghN34P.png" alt="Uncredentialed Scan"/> 
+We can take this a step further by using the nmap -O 10.0.2.4 command to detect the OS of our target system. This command uses Nmap's OS detection feature, which analyzes network responses and compares them to a database of known operating system signatures to identify the OS running on the target machine: 
+<br />
+<br />
+<img src="https://i.imgur.com/Ie7kwwa.png" alt="OS Detection"/> 
 
 <h2>Credentialed Scan:</h2> 
  <p align="center">
 To perform a credentialed scan, the virtual machine must be configured to accept authenticated scans. In Nessus, select the previously created scan, click 'More', then 'Configure'. Navigate to the 'Credentials' tab located next to 'Settings'. Set the 'Authentication method' to 'Password', and enter the username and password for the target Metasploitable virtual machine. After saving the credentials, launch the scan. 
  <br/>
  <br/>
- <img src="https://i.imgur.com/W7IuPhL.png" alt="Credentialed Scan Configuration"/>
+ <img src="https://i.imgur.com/lBmA4c3.pngg" alt="Credentialed Scan Configuration"/>
   <br/>
  <br/>
 The image below shows the results of the credentialed scan, where the total number of vulnerabilities increased from 68 to 90: 
   <br/>
  <br/>
- <img src="https://i.imgur.com/7bVcbEM.png" alt="Credentialed Scan Vulnerabilities"/>
+ <img src="https://i.imgur.com/rONhUQZ.png" alt="Credentialed Scan Vulnerabilities"/>
  <br/>
  <br/>
 Here is a side-by-side comparison of the two scans, with the credentialed scan displayed on the right: 
