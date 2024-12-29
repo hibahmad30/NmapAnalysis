@@ -138,23 +138,19 @@ CVE-2007-6750 is a vulnerability in the Apache HTTP Server. It allows attackers 
 <img src="https://i.imgur.com/5loHs8h.png" alt="Slowloris"/>
  
 <h2>Key takeaways:</h2>
-The project began by installing Nessus on a Windows 10 virtual machine to perform the vulnerability assessment. The target system for the scan was Metasploitable, a purposely vulnerable VM designed for testing. Both credentialed and non-credentialed scans were configured and executed to evaluate the vulnerabilities present on the target system.
+The project began by installing Nmap on a Windows 10 virtual machine to perform a comprehensive network scan. The target system for the scan was Metasploitable 2, a deliberately vulnerable virtual machine designed for testing. Basic Nmap scans, including TCP Connect and SYN scans, were executed to identify open ports and assess potential entry points. These scans provided a foundational understanding of the system's surface area for potential attacks.
 <br/>
 <br/>
-After the scans were completed, the results were exported in CSV format and imported into Excel for further analysis. The Excel file was then formatted to improve readability by expanding columns, applying filters, and creating pivot tables. These tables helped summarize and organize the vulnerabilities based on their risk levels and the systems they affected.
+After performing basic scans, more advanced techniques were utilized, such as OS detection and scanning specific ports, to gather deeper insights into the target system. Specific ports like SMTP, DNS, and HTTP were scanned to understand the services running and their potential vulnerabilities. To further enhance the scanning process, obfuscation techniques were used by employing decoy IP addresses to avoid detection while scanning, along with a Zenmap GUI demo for a user-friendly interface to visualize results.
 <br/>
 <br/>
-The project included researching specific vulnerabilities by referencing CVE entries and CVSS scores. This research provided a deeper understanding of the vulnerabilities, helping to evaluate their severity and potential impact. This was an important step in determining which vulnerabilities posed the highest risk to the system.
+The project also involved running a comprehensive vulnerability scan using the Nmap Scripting Engine (NSE). This allowed for a more detailed exploration of vulnerabilities, such as CVEs, and provided critical information about weaknesses in the target system. A few of the identified vulnerability were researched to understand their impact and severity, contributing to a deeper understanding of how attackers might exploit these issues.
 <br/>
 <br/>
-Vulnerability management is a critical process in cybersecurity that helps identify, assess, and mitigate security risks. Regular scans and effective management of vulnerabilities ensure that weaknesses in a system are addressed before they can be exploited by attackers. By following a structured approach to vulnerability management, organizations can minimize their exposure to threats.
+In an enterprise environment, the steps taken in this project could strengthen the overall security posture by identifying vulnerabilities that could potentially be exploited by attackers. By using Nmap’s extensive scanning capabilities, an organization can proactively assess their systems, prioritize vulnerabilities based on severity, and reduce their attack surface. Regular vulnerability assessments like these help minimize the risk of cyberattacks, ensuring that potential weaknesses are addressed before they can be exploited, ultimately strengthening security defenses across the organization. 
 <br/>
 <br/>
-Prioritization is a key aspect of vulnerability management. Vulnerabilities should be prioritized based on factors such as their severity, ease of exploitation, and the potential impact they could have. CVE and CVSS scores play a significant role in helping to rank vulnerabilities, ensuring that the most critical issues are dealt with first.
-<br/>
-<br/>
-In conclusion, this project highlighted the importance of vulnerability scanning, prioritization, and research in securing systems. By utilizing Nessus and examining CVE entries along with CVSS scores, I learned that effective vulnerability management involves a structured approach and informed decision-making to mitigate risks and strengthen overall security.
-
+In conclusion, this project highlights the importance of network scanning, vulnerability detection, and prioritization in maintaining a secure enterprise environment. By utilizing tools like Nmap, performing thorough scans, and researching vulnerabilities, I gained valuable insights into effective security practices to enhance an organization’s defense mechanisms and reduce exposure to potential threats.
 
 <p align="center">
 <!--
