@@ -23,6 +23,15 @@ The primary difference in this project is the addition of Nmap, which will be in
  <br/> 
  <br/>
 <img src="https://i.imgur.com/xs5FPLg.png" alt="Nmap Installation Status"/>
+ <br/> 
+ <br/>
+Once Nmap is installed on Windows, we need to configure it to run from the Windows command line. First, open the Windows command line and run the ‘SystemPropertiesAdvanced.exe’ command to open System Properties to the Advanced tab. 
+ <br/> 
+ <br/>
+Then, click the ‘Environment Variables’ tab, and choose ‘Path’ from the ‘System Variables’ section. Click ‘Edit’, and add the Nmap directory (c:\Program Files (x86)\Nmap).
+ <br/> 
+ <br/>
+<img src="https://i.imgur.com/syFpMSg.png" alt="Edit Environment Variable"/>
 
 <h2>Network Configuration and Testing:</h2> 
 
