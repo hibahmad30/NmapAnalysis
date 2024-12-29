@@ -89,66 +89,35 @@ When using '-sS' for a stealth scan, '-D' can be used to specify a decoy IP addr
 As a bonus, if you prefer using a GUI to run Nmap scans, Nmap offers the Zenmap GUI. In Zenmap, you can simply provide the target IP and choose from a variety of preconfigured scan options. Additionally, it allows you to specify custom commands for more advanced scanning needs, offering an easy-to-use interface for those who prefer not to work with the command line.
   <br/>
  <br/>
- <img src="https://i.imgur.com/4uY4ge5.png" alt="Zenmap GUI"/>
+ <img src="https://i.imgur.com/4uY4ge5.png" alt="Zenmap GUI"/> 
 
 <h2>Comprehensive Vulnerability Scan with Nmap Scripting Engine:</h2> 
  <p align="center">
-To prepare the CSV file for analysis, use Excel to apply additional formatting, such as expanding columns, changing header colors, bolding the header text, enabling text wrapping, and turning on filters for the headers. I also renamed the headers for better clarity: 'Name' to 'Vulnerability Title', 'Synopsis' to 'Vulnerability Description', 'Description' to 'Plugin Description', and 'Solution' to 'Vulnerability Solution'.
- <br/>
- <br/>
-<img src="https://i.imgur.com/medb6YU.png" alt="Format CSV File"/>
-<br />
-<br />
-The first pivot table summarizes the number of Critical, High, Medium, and Low vulnerabilities for the Metasploitable host, along with the grand total of vulnerabilities. If the scan were conducted against multiple hosts, this pivot table could be used to easily compare the total number of vulnerabilities by risk level for each host. By double-clicking on any risk level, an additional Excel sheet is generated, providing further details on the specific vulnerabilities within that risk level.
-<br />
-<br />
-<img src="https://i.imgur.com/BSxWNBu.png" alt="Asset IP Pivot Table"/>
-<br />
-<br />
-I then created a second pivot table that lists each vulnerability title, along with its associated risk level and the number of hosts impacted. In this specific use case, there is only one host, however multiple vulnerabilities with distinct CVEs share the same vulnerability title. This pivot table is particularly useful for vulnerability management, as it allows for easy identification of vulnerabilities by title and risk level, making it simpler to prioritize remediation efforts. It also provides insight into the level of impact, highlighting which vulnerabilities affect a larger number of hosts and helping guide the allocation of resources for mitigation.
-<br />
-<br />
-<img src="https://i.imgur.com/nwNIN58.png" alt="Risk by Vulnerability Pivot Table"/>
-
-<h2>Vulnerability Analysis:</h2> 
- <p align="center">
-CVEs (Common Vulnerabilities and Exposures) are unique identifiers assigned to publicly known security vulnerabilities in software, hardware, or firmware, enabling standardized tracking and sharing across platforms. Each CVE provides a brief description and references to relevant fixes or patches. 
+The Nmap Scripting Engine (NSE) is a feature within Nmap that allows users to automate a wide range of scanning tasks using pre-written scripts. NSE scripts are written in the Lua programming language and are organized into categories based on their functionality.
 <br />
 <br />  
-The NIST NVD (National Vulnerability Database) is a comprehensive resource managed by the National Institute of Standards and Technology, offering detailed information on CVEs, including severity ratings and potential mitigations. In this project, we will explore some of the vulnerabilities found in our scan by referencing their CVEs in the NVD to analyze their impact and remediation strategies.
-<br />
-<br />
-Starting with CVE-2003-1567, the vulnerability details can be found on the NIST NVD at the following link: https://nvd.nist.gov/vuln/detail/CVE-2003-1567. 
-<br />
-<br />
- <img src="https://i.imgur.com/wTNh2vc.png" height="70%" width="70%" alt="NIST NVD CVE Details"/>
-<br />
-<br />
-CVE-2003-1567 is a security flaw in an older version of Microsoft Internet Information Services (IIS), which is used to manage websites. Rapid7's inclusion of Microsoft IIS on Metasploitable simulates real-world scenarios where outdated or poorly configured web servers become targets for attacks. This flaw involves a feature called the "TRACK" method, which is intended to track certain actions on a website. 
+For a list of available NSE scripts, you can visit: https://nmap.org/nsedoc/categories/. Under the ‘vuln’ category, there are various scripts designed to scan for specific vulnerabilities. The command 'nmap --script vuln 10.0.2.4' runs all the scripts in the ‘vuln’ category on the target IP (10.0.2.4), performing a comprehensive vulnerability scan and providing details on any identified CVEs (Common Vulnerabilities and Exposures). 
 <br />
 <br />  
-However, when used, it can accidentally reveal sensitive information like login details or cookies (small pieces of data that remember a user's actions on a website). Attackers can exploit this flaw to steal such information or bypass security measures, making it easier for them to access user accounts or sensitive data without permission. To prevent this, website administrators should disable unused features like the "TRACK" method to improve security.
+<img src="https://i.imgur.com/YJs8y5m.png" alt="Nmap Scripting Engine"/>
 <br />
 <br />
-Next is CVE-2008-0166, a critical vulnerability related to insecure remote SSH host keys. 
-<br />
-<br />
-<img src="https://i.imgur.com/lghZE79.png" height="70%" width="70%" alt="NIST NVD CVE Vulnerability"/>
-<br />
-<br />
-This vulnerability involves an outdated version of OpenSSL, a tool used to secure online communications. The problem is that the random number generator it uses to create secure keys is not truly random, meaning the numbers can be predicted by attackers. 
+Here are a few of the vulnerabilities detected by the scan:
 <br />
 <br />  
-If attackers can predict these numbers, they can attempt to guess the cryptographic keys used to secure data through a method called brute force, where they try many possible combinations until they find the correct one. This makes it easier for attackers to break the encryption and access sensitive information. To prevent this, it's important to use a secure, updated method for generating cryptographic keys.  
-<br />
-<br />
-When prioritizing vulnerabilities for remediation, it's important to focus on those that pose the greatest risk to your system first. Start with critical vulnerabilities that are easy to exploit or affect important systems. These are often high-impact issues that could allow attackers to gain access to sensitive information or disrupt services. 
+<img src="https://i.imgur.com/oxveLd8.png" alt="FTP Backdoor"/>
 <br />
 <br />  
-Next, consider vulnerabilities with a high likelihood of being exploited, such as those that are widely known or already being targeted. By addressing the most severe and likely-to-be-exploited vulnerabilities first, you reduce the chances of a successful attack and improve your overall security posture. Prioritizing helps ensure that resources are used effectively to minimize risk. 
+<img src="https://i.imgur.com/6qDNiRI.png" alt="Remote Code"/>
+<br />
+<br />   
+<img src="https://i.imgur.com/zo1yOH9.png" alt="SSL Poodle"/>
 <br />
 <br />  
-Tenable provides documentation on prioritizing vulnerabilities based on certain metrics, such as the Common Vulnerability Scoring System, or CVSS, which helps assess the severity of vulnerabilities. To learn more about how to use CVSS for prioritization, navigate to the following guide by Tenable: https://docs.tenable.com/cyber-exposure-studies/application-software-security/Content/VulnerabilitiesCVSS.htm. 
+<img src="https://i.imgur.com/jcjA1t0.png" alt="CCS Injection"/>
+<br />
+<br />   
+<img src="https://i.imgur.com/5loHs8h.png" alt="Slowloris"/>
  
 <h2>Key takeaways:</h2>
 The project began by installing Nessus on a Windows 10 virtual machine to perform the vulnerability assessment. The target system for the scan was Metasploitable, a purposely vulnerable VM designed for testing. Both credentialed and non-credentialed scans were configured and executed to evaluate the vulnerabilities present on the target system.
