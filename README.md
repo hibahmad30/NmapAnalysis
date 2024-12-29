@@ -68,35 +68,30 @@ We can take this a step further by using the nmap -O 10.0.2.4 command to detect 
 <br />
 <br />
 <img src="https://i.imgur.com/Ie7kwwa.png" alt="OS Detection"/> 
+<br />
+<br />
+Instead of using -O, you can use -A to get even more details, such as OS detection, version information, script scanning, and traceroute. The -A option provides a comprehensive scan that includes additional information like SSH hostkey, which is a unique identifier used by SSH servers to establish secure connections, and the version of SSH being used. It also provides SMB info for file sharing and a traceroute to show how far the target is from us on the network.
+<br />
+<br />
+<img src="https://i.imgur.com/jUmU0qP.png" alt="OS Detection Extended"/> 
+<br />
+<br />
+<img src="https://i.imgur.com/xoANwZn.png" alt="SMB Information"/> 
 
-<h2>Credentialed Scan:</h2> 
+<h2>Scanning with Obfuscation and Zenmap GUI Demo:</h2> 
  <p align="center">
-To perform a credentialed scan, the virtual machine must be configured to accept authenticated scans. In Nessus, select the previously created scan, click 'More', then 'Configure'. Navigate to the 'Credentials' tab located next to 'Settings'. Set the 'Authentication method' to 'Password', and enter the username and password for the target Metasploitable virtual machine. After saving the credentials, launch the scan. 
+When using '-sS' for a stealth scan, '-D' can be used to specify a decoy IP address. This helps avoid detection by making it harder for the target system to identify the actual source of the scan. If the target sees multiple requests from different IP addresses, it becomes more challenging to trace the scan back to the real attacker. The command would be 'nmap -sS -D 10.0.2.10 10.0.2.4', where '10.0.2.10' is the decoy IP address and '10.0.2.4' is the target.
  <br/>
  <br/>
- <img src="https://i.imgur.com/lBmA4c3.pngg" alt="Credentialed Scan Configuration"/>
+ <img src="https://i.imgur.com/Zxm9cWt.png" alt="Decoy Scan"/>
   <br/>
  <br/>
-The image below shows the results of the credentialed scan, where the total number of vulnerabilities increased from 68 to 90: 
+As a bonus, if you prefer using a GUI to run Nmap scans, Nmap offers the Zenmap GUI. In Zenmap, you can simply provide the target IP and choose from a variety of preconfigured scan options. Additionally, it allows you to specify custom commands for more advanced scanning needs, offering an easy-to-use interface for those who prefer not to work with the command line.
   <br/>
  <br/>
- <img src="https://i.imgur.com/rONhUQZ.png" alt="Credentialed Scan Vulnerabilities"/>
- <br/>
- <br/>
-Here is a side-by-side comparison of the two scans, with the credentialed scan displayed on the right: 
-  <br/>
- <br/>
- <img src="https://i.imgur.com/pZ7HRqC.png" height="35%" width="35%" alt="Uncredentialed Scan Results"/>     <img src="https://i.imgur.com/OALjpWr.png" height="35%" width="35%" alt="Credentialed Scan Results"/> 
-  <br/>
- <br/>
-For detailed analysis, click 'Generate Report', choose 'CSV', and select the desired columns. While Nessus also offers the option to download an HTML report, I chose CSV for the additional customization options: 
- <br/>
- <br/>
- <img src="https://i.imgur.com/QjDmAlT.png" alt="Generate Report"/>
-  <br/>
- <br/>
+ <img src="https://i.imgur.com/4uY4ge5.png" alt="Zenmap GUI"/>
 
-<h2>Excel Data Processing:</h2> 
+<h2>Comprehensive Vulnerability Scan with Nmap Scripting Engine:</h2> 
  <p align="center">
 To prepare the CSV file for analysis, use Excel to apply additional formatting, such as expanding columns, changing header colors, bolding the header text, enabling text wrapping, and turning on filters for the headers. I also renamed the headers for better clarity: 'Name' to 'Vulnerability Title', 'Synopsis' to 'Vulnerability Description', 'Description' to 'Plugin Description', and 'Solution' to 'Vulnerability Solution'.
  <br/>
