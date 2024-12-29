@@ -102,19 +102,37 @@ For a list of available NSE scripts, you can visit: https://nmap.org/nsedoc/cate
 <img src="https://i.imgur.com/YJs8y5m.png" alt="Nmap Scripting Engine"/>
 <br />
 <br />
-Here are a few of the vulnerabilities detected by the scan:
+Here are a few of the vulnerabilities detected by the scan, starting with CVE-2011-2523, a vulnerability found in a specific version of the vsftpd (Very Secure FTP Daemon) software, version 2.3.4. If this version of vsftpd was downloaded between June 30, 2011, and July 3, 2011, it contained a malicious backdoor. This backdoor was intentionally inserted by an attacker into the source code.
 <br />
 <br />  
-<img src="https://i.imgur.com/oxveLd8.png" alt="FTP Backdoor"/>
+When exploited, the backdoor opens a shell (a command line interface) on port 6200/tcp, giving the attacker unauthorized remote access to the system. Essentially, it allows someone to take control of the server without proper permission, making it a significant security risk.
+<br />
+<br />  
+<img src="https://i.imgur.com/oxveLd8.png" alt="FTP Backdoor"/> 
+<br />
+<br />  
+The next vulnerability involves port 1099, used by the Java RMI Registry. By default, the registry's configuration allows it to load code from remote servers. This can be exploited by an attacker to trick the registry into downloading and running malicious code from their server, potentially leading to remote code execution and full system compromise.
 <br />
 <br />  
 <img src="https://i.imgur.com/6qDNiRI.png" alt="Remote Code"/>
 <br />
 <br />   
+Next is CVE-2014-3566, also known as the POODLE vulnerability, which affects SSL 3.0, a version of the security protocol used to encrypt data over the internet. In SSL 3.0, there is a flaw in how it handles padding (extra data added to messages to make them fit a specific size). This flaw allows an attacker to intercept encrypted data and, through a technique called a "padding oracle attack," gradually figure out the original, unencrypted data (cleartext).
+<br />
+<br /> 
+This vulnerability makes it easier for attackers to steal sensitive information, such as login credentials, by exploiting the weakness in how SSL 3.0 handles encryption.
+<br />
+<br /> 
 <img src="https://i.imgur.com/zo1yOH9.png" alt="SSL Poodle"/>
 <br />
 <br />  
+CVE-2014-0224, the CCS Injection vulnerability, affects older versions of OpenSSL. It allows attackers to trick systems into using a weak encryption key by modifying a specific message, the ChangeCipherSpec (CCS) message, during communication. This can allow attackers to hijack the session and steal sensitive information.  
+<br />
+<br /> 
 <img src="https://i.imgur.com/jcjA1t0.png" alt="CCS Injection"/>
+<br />
+<br />   
+CVE-2007-6750 is a vulnerability in the Apache HTTP Server. It allows attackers to overload the server by sending incomplete or "slow" HTTP requests, which can keep the server waiting and cause it to crash. This happens because older versions of Apache lack a feature (mod_reqtimeout) that would stop these types of requests. This can lead to a denial of service, meaning the server becomes unavailable to legitimate users.
 <br />
 <br />   
 <img src="https://i.imgur.com/5loHs8h.png" alt="Slowloris"/>
